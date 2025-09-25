@@ -39,8 +39,8 @@ export default class Canvas {
         enabled: true,
         zoomAtMousePosition: true,
         modifiers: 'ctrl',
-        minScale: 0.5,
-        maxScale: 3,
+        minScale: 0.2,
+        maxScale: 10,
       },
       connecting: {
         router: 'manhattan',
@@ -70,6 +70,11 @@ export default class Canvas {
               },
             },
             zIndex: 0,
+            tools: [
+              {
+                name: 'edge-editor',
+              },
+            ],
           })
         },
         validateConnection({ targetMagnet }) {
@@ -112,21 +117,21 @@ export default class Canvas {
     this.utils = new Utils({ canvas: this })
 
     this.stencil = new Stencil({
-      title: '流程图',
+      title: '图形库',
       target: this.graph,
-      stencilGraphWidth: 200,
+      stencilGraphWidth: 300,
       stencilGraphHeight: 180,
       collapsable: true,
       groups: [
         {
-          title: '基础流程图',
+          title: '基础图形',
           name: 'group1',
         },
       ],
       layoutOptions: {
-        columns: 2,
-        columnWidth: 80,
-        rowHeight: 55,
+        columns: 4,
+        columnWidth: 70,
+        rowHeight: 60,
       },
     })
     this.stencilContainer.appendChild(this.stencil.container)
@@ -202,14 +207,14 @@ export default class Canvas {
     })
 
     graph.on('node:mouseenter', () => {
-      const container = document.getElementById('graph-container')!
+      const container = this.graphContainer
       const ports = container.querySelectorAll(
         '.x6-port-body',
       ) as NodeListOf<SVGElement>
       this.utils.showPorts(ports, true)
     })
     graph.on('node:mouseleave', () => {
-      const container = document.getElementById('graph-container')!
+      const container = this.graphContainer
       const ports = container.querySelectorAll(
         '.x6-port-body',
       ) as NodeListOf<SVGElement>
@@ -236,6 +241,16 @@ export default class Canvas {
           },
         },
         ports: { ...ports },
+        tools: [
+          {
+            name: 'node-editor',
+            args: {
+              attrs: {
+                backgroundColor: '#EFF4FF',
+              },
+            },
+          },
+        ],
       },
       true,
     )
@@ -268,6 +283,16 @@ export default class Canvas {
             },
           ],
         },
+        tools: [
+          {
+            name: 'node-editor',
+            args: {
+              attrs: {
+                backgroundColor: '#EFF4FF',
+              },
+            },
+          },
+        ],
       },
       true,
     )
@@ -290,6 +315,16 @@ export default class Canvas {
           },
         },
         ports: { ...ports },
+        tools: [
+          {
+            name: 'node-editor',
+            args: {
+              attrs: {
+                backgroundColor: '#EFF4FF',
+              },
+            },
+          },
+        ],
       },
       true,
     )
@@ -334,6 +369,16 @@ export default class Canvas {
           },
         },
         ports: { ...ports },
+        tools: [
+          {
+            name: 'node-editor',
+            args: {
+              attrs: {
+                backgroundColor: '#EFF4FF',
+              },
+            },
+          },
+        ],
       },
       true,
     )
@@ -343,49 +388,55 @@ export default class Canvas {
     const { stencil, graph } = this
     const r1 = graph.createNode({
       shape: 'custom-rect',
-      label: '开始',
+      width: 50,
+      height: 30,
       attrs: {
         body: {
           rx: 20,
-          ry: 26,
+          ry: 20,
         },
       },
     })
     const r2 = graph.createNode({
       shape: 'custom-rect',
-      label: '过程',
+      width: 50,
+      height: 30,
     })
     const r3 = graph.createNode({
       shape: 'custom-rect',
+      width: 50,
+      height: 30,
       attrs: {
         body: {
           rx: 6,
           ry: 6,
         },
       },
-      label: '可选过程',
     })
     const r4 = graph.createNode({
       shape: 'custom-polygon',
+      width: 50,
+      height: 30,
       attrs: {
         body: {
           refPoints: '0,10 10,0 20,10 10,20',
         },
       },
-      label: '决策',
     })
     const r5 = graph.createNode({
       shape: 'custom-polygon',
+      width: 50,
+      height: 30,
       attrs: {
         body: {
           refPoints: '10,0 40,0 30,20 0,20',
         },
       },
-      label: '数据',
     })
     const r6 = graph.createNode({
       shape: 'custom-circle',
-      label: '连接',
+      width: 40,
+      height: 40,
     })
     stencil.load([r1, r2, r3, r4, r5, r6], 'group1')
   }
