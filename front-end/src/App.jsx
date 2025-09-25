@@ -1,10 +1,11 @@
 import styles from './App.module.less'
+import Editor from './components/Editor'
 
 function App() {
   return (
-    <>
-      <h1 className={styles.title}>1</h1>
-    </>
+    <div>
+      <Editor />
+    </div>
   )
 }
 
