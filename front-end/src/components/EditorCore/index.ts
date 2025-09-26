@@ -34,7 +34,12 @@ export default class Canvas {
   initGraph() {
     this.graph = new Graph({
       container: this.graphContainer,
-      grid: true,
+      grid: {
+        visible: true,
+        type: 'mesh',
+        // size: 8,
+      },
+      panning: true,
       mousewheel: {
         enabled: true,
         zoomAtMousePosition: true,

@@ -1,8 +1,11 @@
+@tooBarHeight: 40px;
+@backgroundColor: #f6f7f8;
+
 .container {
   display: flex;
   border: 1px solid #dfe3e8;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - @tooBarHeight);
 
   .stencil_container {
     width: 300px;
@@ -18,13 +21,16 @@
 
   :global {
     .x6-widget-stencil  {
-      background-color: #fff;
+      background-color: @backgroundColor;
     }
     .x6-widget-stencil-title {
-      background-color: #fff;
+      background-color: @backgroundColor;
+      font-size: 16px;
+      display: none;
     }
     .x6-widget-stencil-group-title {
-      background-color: #fff !important;
+      background-color: @backgroundColor !important;
+      font-size: 16px;
     }
     .x6-widget-transform {
       margin: -1px 0 0 -1px;
