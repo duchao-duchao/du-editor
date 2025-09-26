@@ -37,9 +37,12 @@ export default class Canvas {
       grid: {
         visible: true,
         type: 'mesh',
-        // size: 8,
+        size: 16,
       },
-      panning: true,
+      panning: {
+        enabled: true,
+        eventTypes: ['leftMouseDown', 'mouseWheel'],
+      },
       mousewheel: {
         enabled: true,
         zoomAtMousePosition: true,
@@ -65,8 +68,8 @@ export default class Canvas {
           return new Shape.Edge({
             attrs: {
               line: {
-                stroke: '#A2B1C3',
-                strokeWidth: 2,
+                // stroke: '#A2B1C3',
+                strokeWidth: 1,
                 targetMarker: {
                   name: 'block',
                   width: 12,
@@ -124,7 +127,7 @@ export default class Canvas {
     this.stencil = new Stencil({
       title: '图形库',
       target: this.graph,
-      stencilGraphWidth: 300,
+      stencilGraphWidth: 250,
       stencilGraphHeight: 180,
       collapsable: true,
       groups: [
@@ -134,9 +137,9 @@ export default class Canvas {
         },
       ],
       layoutOptions: {
-        columns: 4,
-        columnWidth: 70,
-        rowHeight: 60,
+        columns: 5,
+        columnWidth: 45,
+        rowHeight: 45,
       },
     })
     this.stencilContainer.appendChild(this.stencil.container)
@@ -237,8 +240,6 @@ export default class Canvas {
         attrs: {
           body: {
             strokeWidth: 1,
-            stroke: '#5F95FF',
-            fill: '#EFF4FF',
           },
           text: {
             fontSize: 12,
@@ -269,8 +270,6 @@ export default class Canvas {
         attrs: {
           body: {
             strokeWidth: 1,
-            stroke: '#5F95FF',
-            fill: '#EFF4FF',
           },
           text: {
             fontSize: 12,
@@ -311,8 +310,6 @@ export default class Canvas {
         attrs: {
           body: {
             strokeWidth: 1,
-            stroke: '#5F95FF',
-            fill: '#EFF4FF',
           },
           text: {
             fontSize: 12,
@@ -355,8 +352,8 @@ export default class Canvas {
         ],
         attrs: {
           body: {
-            stroke: '#5F95FF',
-            fill: '#5F95FF',
+            // stroke: '#5F95FF',
+            // fill: '#5F95FF',
           },
           image: {
             width: 26,
@@ -393,8 +390,8 @@ export default class Canvas {
     const { stencil, graph } = this
     const r1 = graph.createNode({
       shape: 'custom-rect',
-      width: 50,
-      height: 30,
+      width: 30,
+      height: 15,
       attrs: {
         body: {
           rx: 20,
@@ -404,13 +401,13 @@ export default class Canvas {
     })
     const r2 = graph.createNode({
       shape: 'custom-rect',
-      width: 50,
-      height: 30,
+      width: 30,
+      height: 10,
     })
     const r3 = graph.createNode({
       shape: 'custom-rect',
-      width: 50,
-      height: 30,
+      width: 30,
+      height: 20,
       attrs: {
         body: {
           rx: 6,
@@ -420,8 +417,8 @@ export default class Canvas {
     })
     const r4 = graph.createNode({
       shape: 'custom-polygon',
-      width: 50,
-      height: 30,
+      width: 30,
+      height: 15,
       attrs: {
         body: {
           refPoints: '0,10 10,0 20,10 10,20',
@@ -430,8 +427,8 @@ export default class Canvas {
     })
     const r5 = graph.createNode({
       shape: 'custom-polygon',
-      width: 50,
-      height: 30,
+      width: 30,
+      height: 15,
       attrs: {
         body: {
           refPoints: '10,0 40,0 30,20 0,20',
@@ -440,8 +437,8 @@ export default class Canvas {
     })
     const r6 = graph.createNode({
       shape: 'custom-circle',
-      width: 40,
-      height: 40,
+      width: 30,
+      height: 30,
     })
     stencil.load([r1, r2, r3, r4, r5, r6], 'group1')
   }

@@ -6,5 +6,23 @@
   background-color: @backgroundColor;
   display: flex;
   align-items: center;
-  gap: 5px;
+  justify-content: space-between;
+  // gap: 8px;
+  padding: 0 16px;
+
+  .left, .right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .operation {
+    cursor: pointer;
+  }
+
+  .line {
+    width: 1px;
+    height: 25px;
+    background-color: #dfe3e8;
+  }
 }
