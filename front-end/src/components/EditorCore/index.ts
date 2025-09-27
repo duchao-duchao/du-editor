@@ -143,6 +143,16 @@ export default class Canvas {
       },
     })
     this.stencilContainer.appendChild(this.stencil.container)
+    
+    // 添加事件监听器，当节点从 stencil 拖拽到画布时，将其大小放大 2 倍
+    this.graph.on('node:added', ({ node }) => {
+      // 获取节点当前大小
+      const width = node.getSize().width
+      const height = node.getSize().height
+      
+      // 将节点大小放大 2 倍
+      node.resize(width * 2, height * 2)
+    })
   }
 
   bindEvent() {
@@ -440,6 +450,94 @@ export default class Canvas {
       width: 30,
       height: 30,
     })
-    stencil.load([r1, r2, r3, r4, r5, r6], 'group1')
+    
+    // 新增图形
+    // 椭圆形
+    const r7 = graph.createNode({
+      shape: 'custom-rect',
+      width: 40,
+      height: 20,
+      attrs: {
+        body: {
+          rx: 20,
+          ry: 10,
+        },
+      },
+    })
+    
+    // 菱形
+    const r8 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 30,
+      height: 30,
+      attrs: {
+        body: {
+          refPoints: '15,0 30,15 15,30 0,15',
+        },
+      },
+    })
+    
+    // 三角形
+    const r9 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 30,
+      height: 30,
+      attrs: {
+        body: {
+          refPoints: '15,0 30,30 0,30',
+        },
+      },
+    })
+    
+    // 六边形
+    const r10 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 40,
+      height: 30,
+      attrs: {
+        body: {
+          refPoints: '10,0 30,0 40,15 30,30 10,30 0,15',
+        },
+      },
+    })
+    
+    // 五角星
+    const r11 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 30,
+      height: 30,
+      attrs: {
+        body: {
+          refPoints: '15,0 18,10 30,10 20,17 24,30 15,22 6,30 10,17 0,10 12,10',
+        },
+      },
+    })
+    
+    // 云形
+    const r12 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 40,
+      height: 25,
+      attrs: {
+        body: {
+          refPoints: '5,15 0,10 5,5 15,0 25,5 35,0 40,10 35,20 25,25 15,20',
+        },
+      },
+    })
+    
+    // 流程图 - 文档
+    const r13 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 36,
+      height: 18,
+      attrs: {
+        body: {
+          refPoints: '0,0 60,0 60,20 30,30 0,20',
+        },
+      },
+    })
+
+    // 创建分组
+    stencil.load([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13], 'group1')
   }
 }

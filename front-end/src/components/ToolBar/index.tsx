@@ -1,3 +1,5 @@
+import { Tooltip } from 'antd'
+
 import styles from './index.module.less'
 import Canvas from '../EditorCore'
 
@@ -15,6 +17,8 @@ import {
   TextItalicIcon,
   TextUnderlineIcon,
 } from '../../assets/svg/svgList' 
+import ExportModal from '../Modals/ExportModal'
+import { useState } from 'react'
 
 interface Props {
   canvas: React.RefObject<Canvas | null>
@@ -22,34 +26,51 @@ interface Props {
 
 const ToolBar = (props: Props) => {
   const { canvas } = props
+  const [exportModalVisible, setExportModalVisible] = useState(false)
 
   return (
     <div className={styles.tooBar}>
       <div className={styles.left}>
         <div className={styles.operation} onClick={() => canvas.current?.graph.undo()}>
-          <BackIcon width={18} height={18} />
+          <Tooltip title="撤销" placement="bottom">
+            <BackIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation} onClick={() => canvas.current?.graph.redo()}>
-          <ForwardIcon width={18} height={18} />
+          <Tooltip title="重做" placement="bottom">
+            <ForwardIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation} onClick={() => canvas.current?.graph.centerContent()}>
-          <FocusIcon width={18} height={18} />
+          <Tooltip title="居中" placement="bottom">
+            <FocusIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.line}></div>
         <div className={styles.operation}>
-          <TextBoldIcon width={18} height={18} />
+          <Tooltip title="加粗" placement="bottom">
+            <TextBoldIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation}>
-          <TextItalicIcon width={18} height={18} />
+          <Tooltip title="斜体" placement="bottom">
+            <TextItalicIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation}>
-          <TextUnderlineIcon width={18} height={18} />
+          <Tooltip title="下划线" placement="bottom">
+            <TextUnderlineIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation}>
-          <FontSizeIcon width={18} height={18} />
+          <Tooltip title="字体大小" placement="bottom">
+            <FontSizeIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div className={styles.operation}>
-          <BacIcon width={18} height={18} />
+          <Tooltip title="背景颜色" placement="bottom">
+            <BacIcon width={18} height={18} />
+          </Tooltip>
         </div>
       </div>
       <div className={styles.right}>
@@ -61,28 +82,35 @@ const ToolBar = (props: Props) => {
             })
           }}
         >
-          <DelIcon width={18} height={18} />
+          <Tooltip title="删除" placement="bottom">
+            <DelIcon width={18} height={18} />
+          </Tooltip>
         </div>
           <div className={styles.operation}>
-          <ImportIcon width={18} height={18} />
+          <Tooltip title="导入" placement="bottom">
+            <ImportIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div
           className={styles.operation}
           onClick={() => {
             if (canvas.current) {
-              const data = canvas.current.graph.toJSON()
-              const dataStr = JSON.stringify(data)
-              const blob = new Blob([dataStr], { type: 'application/json' })
-              const url = URL.createObjectURL(blob)
-              const a = document.createElement('a')
-              a.href = url
-              a.download = 'canvas-data.json'
-              a.click()
-              URL.revokeObjectURL(url)
+              setExportModalVisible(true)
+              // const data = canvas.current.graph.toJSON()
+              // const dataStr = JSON.stringify(data)
+              // const blob = new Blob([dataStr], { type: 'application/json' })
+              // const url = URL.createObjectURL(blob)
+              // const a = document.createElement('a')
+              // a.href = url
+              // a.download = 'canvas-data.json'
+              // a.click()
+              // URL.revokeObjectURL(url)
             }
           }}
         >
-          <ExportIcon width={18} height={18} />
+          <Tooltip title="导出" placement="bottom">
+            <ExportIcon width={18} height={18} />
+          </Tooltip>
         </div>
         <div
           className={styles.operation}
@@ -94,9 +122,20 @@ const ToolBar = (props: Props) => {
             }
           }}
         >
-          <FullScreenIcon width={18} height={18} />
+          <Tooltip title="全屏" placement="bottom">
+            <FullScreenIcon width={18} height={18} />
+          </Tooltip>
         </div>
       </div>
+
+      <ExportModal
+        visible={exportModalVisible}
+        onCancel={() => setExportModalVisible(false)}
+        onExport={(data) => {
+          setExportModalVisible(false)
+          console.log(data)
+        }}
+      />
     </div>
   )
 }

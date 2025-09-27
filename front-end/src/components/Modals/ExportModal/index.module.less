@@ -1,0 +1,61 @@
+.exportModal {
+  display: flex;
+  height: 400px;
+  
+  .leftPanel {
+    width: 180px;
+    border-right: 1px solid #dfe3e8;
+    padding-right: 10px;
+    overflow-y: auto;
+    
+    .fileTypeItem {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: #f6f7f8;
+      }
+      
+      &.active {
+        background-color: #e6f7ff;
+        color: #1890ff;
+      }
+      
+      .fileTypeIcon {
+        margin-right: 10px;
+        font-size: 20px;
+      }
+      
+      .fileTypeName {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  .rightPanel {
+    flex: 1;
+    padding-left: 20px;
+    overflow-y: auto;
+    
+    .formItem {
+      margin-bottom: 16px;
+      
+      .label {
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      
+      .optionLabel {
+        margin-bottom: 8px;
+      }
+      
+      .description {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
