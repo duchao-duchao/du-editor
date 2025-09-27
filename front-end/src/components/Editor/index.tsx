@@ -18,7 +18,7 @@ const Editor = () => {
 
   return (
     <div>
-      <TooBar canvas={canvas} />
+      {/* <TooBar canvas={canvas} /> */}
       <div className={styles.container} id='container'>
         <div className={styles.stencil_container} id="stencil_container"></div>
         <div className={styles.canvas_container} id="canvas_container"></div>
