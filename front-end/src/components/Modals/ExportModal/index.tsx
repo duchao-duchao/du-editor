@@ -52,7 +52,6 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
     { icon: '🔠', name: 'SVG', value: 'svg' },
     { icon: '📑', name: 'PDF', value: 'pdf' },
     { icon: '📝', name: 'Markdown', value: 'markdown' },
-    { icon: '🧠', name: 'XMind', value: 'xmind' },
     { icon: '📝', name: 'Txt', value: 'txt' },
     { icon: '📊', name: 'JSON', value: 'json' },
   ];
