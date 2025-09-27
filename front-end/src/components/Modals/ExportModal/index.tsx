@@ -11,38 +11,17 @@ interface ExportModalProps {
 interface ExportData {
   fileName: string;
   fileType: string;
-  format: string;
-  horizontalPadding?: number;
-  verticalPadding?: number;
-  backgroundTransparent?: boolean;
-  showFullBackground?: boolean;
-  addWatermark?: boolean;
-  watermarkText?: string;
 }
 
 const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }) => {
   const [activeTab, setActiveTab] = useState('图片');
-  const [fileType, setFileType] = useState('png');
+  const [fileType, setFileType] = useState('image');
   const [fileName, setFileName] = useState('');
-  const [format, setFormat] = useState('PNG');
-  const [horizontalPadding, setHorizontalPadding] = useState(10);
-  const [verticalPadding, setVerticalPadding] = useState(10);
-  const [backgroundTransparent, setBackgroundTransparent] = useState(false);
-  const [showFullBackground, setShowFullBackground] = useState(true);
-  const [addWatermark, setAddWatermark] = useState(false);
-  const [watermarkText, setWatermarkText] = useState('');
 
   const handleExport = () => {
     onExport({
       fileName,
       fileType,
-      format,
-      horizontalPadding,
-      verticalPadding,
-      backgroundTransparent,
-      showFullBackground,
-      addWatermark,
-      watermarkText,
     });
   };
 
@@ -58,6 +37,7 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
       title="导出文件"
       open={visible}
       onCancel={onCancel}
+      destroyOnHidden
       footer={[
         <Button key="cancel" onClick={onCancel}>
           取消
@@ -94,82 +74,6 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
               placeholder="请输入文件名称"
             />
           </div>
-
-          {/* {activeTab === '图片' && (
-            <>
-              <div className={styles.formItem}>
-                <div className={styles.label}>格式</div>
-                <Radio.Group value={fileType} onChange={(e) => setFileType(e.target.value)}>
-                  <Radio value="png">.png</Radio>
-                </Radio.Group>
-              </div>
-
-              <div className={styles.formItem}>
-                <div className={styles.label}>说明</div>
-                <div className={styles.description}>
-                  <Button type="primary" size="small">
-                    常用图片格式，适合查看和分享
-                  </Button>
-                </div>
-              </div>
-
-              <div className={styles.formItem}>
-                <div className={styles.label}>选项</div>
-                <div className={styles.optionLabel}>格式</div>
-                <Radio.Group value={format} onChange={(e) => setFormat(e.target.value)}>
-                  <Radio value="PNG">PNG</Radio>
-                </Radio.Group>
-              </div>
-
-              <div className={styles.formItem}>
-                <div className={styles.optionLabel}>水平内边距</div>
-                <InputNumber
-                  value={horizontalPadding}
-                  onChange={(value) => setHorizontalPadding(value as number)}
-                  min={0}
-                />
-              </div>
-
-              <div className={styles.formItem}>
-                <div className={styles.optionLabel}>垂直内边距</div>
-                <InputNumber
-                  value={verticalPadding}
-                  onChange={(value) => setVerticalPadding(value as number)}
-                  min={0}
-                />
-              </div>
-
-              <div className={styles.formItem}>
-                <div className={styles.optionLabel}>底部添加文字</div>
-                <Input
-                  placeholder="比如: 来自simple-mind-map"
-                  value={watermarkText}
-                  onChange={(e) => {
-                    setWatermarkText(e.target.value);
-                    setAddWatermark(!!e.target.value);
-                  }}
-                />
-              </div>
-
-              <div className={styles.formItem}>
-                <Checkbox
-                  checked={backgroundTransparent}
-                  onChange={(e) => setBackgroundTransparent(e.target.checked)}
-                >
-                  背景是否透明
-                </Checkbox>
-              </div>
-
-              <div className={styles.formItem}>
-                <Checkbox
-                  checked={showFullBackground}
-                  onChange={(e) => setShowFullBackground(e.target.checked)}
-                >
-                  是否显示完整背景图片（使用了背景图片时生效）
-                </Checkbox>
-              </div>
-            </>
-          )} */}
         </div>
       </div>
     </Modal>

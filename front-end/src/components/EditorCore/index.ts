@@ -6,6 +6,7 @@ import { Snapline } from '@antv/x6-plugin-snapline'
 import { Keyboard } from '@antv/x6-plugin-keyboard'
 import { Clipboard } from '@antv/x6-plugin-clipboard'
 import { History } from '@antv/x6-plugin-history'
+import { Export } from '@antv/x6-plugin-export'
 
 import Utils from './utils'
 import { ports } from './const'
@@ -121,6 +122,7 @@ export default class Canvas {
       .use(new Keyboard())
       .use(new Clipboard())
       .use(new History())
+      .use(new Export())
 
     this.utils = new Utils({ canvas: this })
 

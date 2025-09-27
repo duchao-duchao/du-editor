@@ -1,4 +1,5 @@
-import { Tooltip } from 'antd'
+import { message, Tooltip } from 'antd'
+import { useState } from 'react'
 
 import styles from './index.module.less'
 import Canvas from '../EditorCore'
@@ -18,7 +19,7 @@ import {
   TextUnderlineIcon,
 } from '../../assets/svg/svgList' 
 import ExportModal from '../Modals/ExportModal'
-import { useState } from 'react'
+import ImportModal from '../Modals/ImportModal'
 
 interface Props {
   canvas: React.RefObject<Canvas | null>
@@ -27,6 +28,7 @@ interface Props {
 const ToolBar = (props: Props) => {
   const { canvas } = props
   const [exportModalVisible, setExportModalVisible] = useState(false)
+  const [importModalVisible, setImportModalVisible] = useState(false)
 
   return (
     <div className={styles.tooBar}>
@@ -86,7 +88,7 @@ const ToolBar = (props: Props) => {
             <DelIcon width={18} height={18} />
           </Tooltip>
         </div>
-          <div className={styles.operation}>
+        <div className={styles.operation} onClick={() => setImportModalVisible(true)}>
           <Tooltip title="导入" placement="bottom">
             <ImportIcon width={18} height={18} />
           </Tooltip>
@@ -95,17 +97,7 @@ const ToolBar = (props: Props) => {
           className={styles.operation}
           onClick={() => {
             if (canvas.current) {
-              
               setExportModalVisible(true)
-              // const data = canvas.current.graph.toJSON()
-              // const dataStr = JSON.stringify(data)
-              // const blob = new Blob([dataStr], { type: 'application/json' })
-              // const url = URL.createObjectURL(blob)
-              // const a = document.createElement('a')
-              // a.href = url
-              // a.download = 'canvas-data.json'
-              // a.click()
-              // URL.revokeObjectURL(url)
             }
           }}
         >
@@ -135,6 +127,43 @@ const ToolBar = (props: Props) => {
         onExport={(data) => {
           setExportModalVisible(false)
           console.log(data)
+          const area = canvas.current?.graph.getGraphArea(); // 实际内容区域
+          const scale = Math.min(1200 / area?.width, 800 / area?.height); // 缩放比例
+          const width = area.width * scale
+          const height = area.height * scale
+          if (data.fileType === 'image') {
+            canvas.current?.graph.exportPNG(data.fileName, { width, height, quality: 1, padding: 20 })
+          }
+          if (data.fileType === 'svg') {
+            canvas.current?.graph.exportSVG(data.fileName, { preserveDimensions: true })
+          }
+          if (data.fileType === 'pdf') {
+            // canvas.current?.graph.toPDF()
+          }
+          if (data.fileType === 'json') {
+            const graphData = canvas.current?.graph.toJSON()
+            const dataStr = JSON.stringify(graphData)
+            const blob = new Blob([dataStr], { type: 'application/json' })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = `${data?.fileName}.json`
+            a.click()
+            URL.revokeObjectURL(url)
+            a.remove()
+          }
+        }}
+      />
+
+      <ImportModal
+        visible={importModalVisible}
+        onCancel={() => setImportModalVisible(false)}
+        onImport={(data) => {
+          if (data.json) {
+            canvas.current?.graph.fromJSON(data?.json)
+            setImportModalVisible(false)
+            message.success('导入成功')
+          }
         }}
       />
     </div>

@@ -1,4 +1,4 @@
-import styles from './App.module.less'
+import './App.css'
 import Editor from './components/Editor'
 
 function App() {
