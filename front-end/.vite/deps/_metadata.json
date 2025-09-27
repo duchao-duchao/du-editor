@@ -2,7 +2,87 @@
   "hash": "becec60b",
   "configHash": "4be69c91",
   "lockfileHash": "d2dd3e4f",
-  "browserHash": "5163d354",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "61bf02ea",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/.pnpm/react@19.1.1/node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "ddf5a8ee",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/.pnpm/react-dom@19.1.1_react@19.1.1/node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "bfa3fa2d",
+      "needsInterop": true
+    },
+    "antd": {
+      "src": "../../node_modules/.pnpm/antd@5.27.4_react-dom@19.1.1_react@19.1.1__react@19.1.1/node_modules/antd/es/index.js",
+      "file": "antd.js",
+      "fileHash": "8b00c196",
+      "needsInterop": false
+    },
+    "@antv/x6": {
+      "src": "../../node_modules/.pnpm/@antv+x6@2.18.1/node_modules/@antv/x6/es/index.js",
+      "file": "@antv_x6.js",
+      "fileHash": "43b9aa10",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-stencil": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-stencil@2.1.5_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-stencil/es/index.js",
+      "file": "@antv_x6-plugin-stencil.js",
+      "fileHash": "c907f57b",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-transform": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-transform@2.1.8_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-transform/es/index.js",
+      "file": "@antv_x6-plugin-transform.js",
+      "fileHash": "fe49d985",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-selection": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-selection@2.2.2_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-selection/es/index.js",
+      "file": "@antv_x6-plugin-selection.js",
+      "fileHash": "ada2219e",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-snapline": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-snapline@2.1.7_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-snapline/es/index.js",
+      "file": "@antv_x6-plugin-snapline.js",
+      "fileHash": "ccdf7460",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-keyboard": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-keyboard@2.2.3_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-keyboard/es/index.js",
+      "file": "@antv_x6-plugin-keyboard.js",
+      "fileHash": "3913e381",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-clipboard": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-clipboard@2.1.6_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-clipboard/es/index.js",
+      "file": "@antv_x6-plugin-clipboard.js",
+      "fileHash": "1fc8db44",
+      "needsInterop": false
+    },
+    "@antv/x6-plugin-history": {
+      "src": "../../node_modules/.pnpm/@antv+x6-plugin-history@2.2.4_@antv+x6@2.18.1/node_modules/@antv/x6-plugin-history/es/index.js",
+      "file": "@antv_x6-plugin-history.js",
+      "fileHash": "77784775",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-35OGIGHX": {
+      "file": "chunk-35OGIGHX.js"
+    },
+    "chunk-FADBDFBI": {
+      "file": "chunk-FADBDFBI.js"
+    },
+    "chunk-NODUHOHF": {
+      "file": "chunk-NODUHOHF.js"
+    },
+    "chunk-G3PMV62Z": {
+      "file": "chunk-G3PMV62Z.js"
+    }
+  }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Input, Radio, Space, Button, Checkbox, InputNumber } from 'antd';
+import { Modal, Input, Button } from 'antd';
 import styles from './index.module.less';
 
 interface ExportModalProps {
@@ -21,9 +21,9 @@ interface ExportData {
 }
 
 const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }) => {
-  const [activeTab, setActiveTab] = useState('思维导图');
+  const [activeTab, setActiveTab] = useState('图片');
   const [fileType, setFileType] = useState('png');
-  const [fileName, setFileName] = useState('思维导图');
+  const [fileName, setFileName] = useState('');
   const [format, setFormat] = useState('PNG');
   const [horizontalPadding, setHorizontalPadding] = useState(10);
   const [verticalPadding, setVerticalPadding] = useState(10);
@@ -47,12 +47,9 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
   };
 
   const fileTypes = [
-    { icon: '📄', name: '思维导图', value: 'mindmap' },
     { icon: '🖼️', name: '图片', value: 'image' },
     { icon: '🔠', name: 'SVG', value: 'svg' },
     { icon: '📑', name: 'PDF', value: 'pdf' },
-    { icon: '📝', name: 'Markdown', value: 'markdown' },
-    { icon: '📝', name: 'Txt', value: 'txt' },
     { icon: '📊', name: 'JSON', value: 'json' },
   ];
 
@@ -94,11 +91,11 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
             <Input
               value={fileName}
               onChange={(e) => setFileName(e.target.value)}
-              placeholder="思维导图"
+              placeholder="请输入文件名称"
             />
           </div>
 
-          {activeTab === '图片' && (
+          {/* {activeTab === '图片' && (
             <>
               <div className={styles.formItem}>
                 <div className={styles.label}>格式</div>
@@ -172,7 +169,7 @@ const ExportModal: React.FC<ExportModalProps> = ({ visible, onCancel, onExport }
                 </Checkbox>
               </div>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </Modal>
