@@ -264,7 +264,7 @@ export default class Canvas {
             name: 'node-editor',
             args: {
               attrs: {
-                backgroundColor: '#EFF4FF',
+                backgroundColor: 'transparent',
               },
             },
           },
@@ -290,21 +290,21 @@ export default class Canvas {
         },
         ports: {
           ...ports,
-          items: [
-            {
-              group: 'top',
-            },
-            {
-              group: 'bottom',
-            },
-          ],
+          // items: [
+          //   {
+          //     group: 'top',
+          //   },
+          //   {
+          //     group: 'bottom',
+          //   },
+          // ],
         },
         tools: [
           {
             name: 'node-editor',
             args: {
               attrs: {
-                backgroundColor: '#EFF4FF',
+                backgroundColor: 'transparent',
               },
             },
           },
@@ -334,7 +334,7 @@ export default class Canvas {
             name: 'node-editor',
             args: {
               attrs: {
-                backgroundColor: '#EFF4FF',
+                backgroundColor: 'transparent',
               },
             },
           },
@@ -388,7 +388,7 @@ export default class Canvas {
             name: 'node-editor',
             args: {
               attrs: {
-                backgroundColor: '#EFF4FF',
+                backgroundColor: 'transparent',
               },
             },
           },

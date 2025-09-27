@@ -1,4 +1,4 @@
-import { message, Tooltip } from 'antd'
+import { message, Tooltip, InputNumber } from 'antd'
 import { useState } from 'react'
 
 import styles from './index.module.less'
@@ -20,6 +20,7 @@ import {
 } from '../../assets/svg/svgList' 
 import ExportModal from '../Modals/ExportModal'
 import ImportModal from '../Modals/ImportModal'
+import ColorPickerComponent from '../Color'
 
 interface Props {
   canvas: React.RefObject<Canvas | null>
@@ -29,6 +30,7 @@ const ToolBar = (props: Props) => {
   const { canvas } = props
   const [exportModalVisible, setExportModalVisible] = useState(false)
   const [importModalVisible, setImportModalVisible] = useState(false)
+  const [messageApi, contextHolder] = message.useMessage()
 
   return (
     <div className={styles.tooBar}>
@@ -49,29 +51,94 @@ const ToolBar = (props: Props) => {
           </Tooltip>
         </div>
         <div className={styles.line}></div>
-        <div className={styles.operation}>
+        <div
+          className={styles.operation}
+          onClick={() => {
+            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+              const currentWeight = cell.attr('label/fontWeight') || 'normal';
+              cell.attr('label/fontWeight', currentWeight === 'bold' ? 'normal' : 'bold');
+            })
+          }}
+        >
           <Tooltip title="加粗" placement="bottom">
-            <TextBoldIcon width={18} height={18} />
+            <TextBoldIcon width={16} height={16} />
           </Tooltip>
         </div>
-        <div className={styles.operation}>
+        <div
+          className={styles.operation}
+          onClick={() => {
+            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+              const currentStyle = cell.attr('label/fontStyle') || 'normal';
+              cell.attr('label/fontStyle', currentStyle === 'italic' ? 'normal' : 'italic');
+            })
+          }}
+        >
           <Tooltip title="斜体" placement="bottom">
-            <TextItalicIcon width={18} height={18} />
+            <TextItalicIcon width={16} height={16} />
           </Tooltip>
         </div>
-        <div className={styles.operation}>
+        <div
+          className={styles.operation}
+          onClick={() => {
+            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+              const currentStyle = cell.attr('label/textDecoration') || 'normal';
+              cell.attr('label/textDecoration', currentStyle === 'underline' ? 'normal' : 'underline');
+            })
+          }}
+        >
           <Tooltip title="下划线" placement="bottom">
-            <TextUnderlineIcon width={18} height={18} />
+            <TextUnderlineIcon width={16} height={16} />
           </Tooltip>
         </div>
         <div className={styles.operation}>
           <Tooltip title="字体大小" placement="bottom">
-            <FontSizeIcon width={18} height={18} />
+            <InputNumber
+              min={8}
+              max={100}
+              size='small'
+              style={{ width: 60 }}
+              onChange={(value) => {
+                canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                  cell.attr('label/fontSize', value)
+                })
+              }}
+            />
           </Tooltip>
         </div>
         <div className={styles.operation}>
+          <Tooltip title="字体颜色" placement="bottom">
+            <div className={styles.colorPickerWrapper}>
+              <FontSizeIcon width={14} height={14} />
+              <ColorPickerComponent
+                onChange={(color) => {
+                  canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                    cell.attr('label/fill', color.toCssString())
+                  })
+                }}
+              />
+            </div>
+          </Tooltip>
+        </div>
+        <div
+          className={styles.operation}
+          onClick={() => {
+            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+              const currentColor = cell.attr('label/backgroundColor') || 'normal';
+              cell.attr('label/backgroundColor', currentColor === 'normal' ? 'red' : 'normal');
+            })
+          }}
+        >
           <Tooltip title="背景颜色" placement="bottom">
-            <BacIcon width={18} height={18} />
+            <div className={styles.colorPickerWrapper}>
+              <BacIcon width={16} height={16} />
+              <ColorPickerComponent
+                onChange={(color) => {
+                  canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                    cell.attr('body/fill', color.toCssString())
+                  })
+                }}
+              />
+            </div>
           </Tooltip>
         </div>
       </div>
@@ -162,10 +229,11 @@ const ToolBar = (props: Props) => {
           if (data.json) {
             canvas.current?.graph.fromJSON(data?.json)
             setImportModalVisible(false)
-            message.success('导入成功')
+            messageApi.success('导入成功')
           }
         }}
       />
+      {contextHolder}
     </div>
   )
 }

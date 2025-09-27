@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/colors": "^7.2.1",
     "@antv/x6": "^2.18.1",
     "@antv/x6-plugin-clipboard": "^2.1.6",
     "@antv/x6-plugin-export": "^2.1.6",

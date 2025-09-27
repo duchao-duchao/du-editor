@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@ant-design/colors':
+        specifier: ^7.2.1
+        version: 7.2.1
       '@antv/x6':
         specifier: ^2.18.1
         version: 2.18.1
