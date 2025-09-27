@@ -36,7 +36,7 @@ const ColorPickerComponent = ({ defaultValue, onChange }: { defaultValue?: strin
 
   return (
     <ColorPicker
-      defaultValue={defaultValue}
+      value={defaultValue}
       size="small"
       showText={false}
       styles={{ 

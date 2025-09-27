@@ -17,6 +17,14 @@ export default class Canvas {
   stencilContainer: HTMLElement
   utils: Utils
   stencil: Stencil
+  selectedNodeStyles: {
+    fontSize?: number
+    fontWeight?: string
+    fontStyle?: string
+    textDecoration?: string
+    color?: string
+    backgroundColor?: string
+  } = {}
 
   constructor(props) {
     this.graphContainer = props.graphContainer
@@ -159,6 +167,20 @@ export default class Canvas {
 
   bindEvent() {
     const { graph } = this
+    
+    // 添加选中事件监听
+    graph.on('selection:changed', ({ selected }) => {
+      this.updateSelectedNodeStyles(selected)
+    })
+
+    // 添加节点属性变化监听
+    graph.on('cell:change:attrs', ({ cell }) => {
+      const selectedCells = graph.getSelectedCells()
+      if (selectedCells.includes(cell)) {
+        this.updateSelectedNodeStyles(selectedCells)
+      }
+    })
+
     graph.bindKey(['meta+c', 'ctrl+c'], () => {
       const cells = graph.getSelectedCells()
       if (cells.length) {
@@ -541,5 +563,52 @@ export default class Canvas {
 
     // 创建分组
     stencil.load([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13], 'group1')
+  }
+
+  // 更新选中节点的样式信息
+  updateSelectedNodeStyles(selectedCells: any[]) {
+    if (selectedCells.length === 0) {
+      this.selectedNodeStyles = {}
+      return
+    }
+
+    // 如果选中多个节点，取第一个节点的样式作为默认值
+    const firstCell = selectedCells[0]
+    if (firstCell.isNode()) {
+      const attrs = firstCell.getAttrs()
+      // 根据节点类型获取相应的文本属性
+      let labelAttrs = attrs.label
+      let bodyAttrs = attrs.body
+
+
+      this.selectedNodeStyles = {
+        fontSize: labelAttrs?.fontSize || 12,
+        fontWeight: labelAttrs?.fontWeight || 'normal',
+        fontStyle: labelAttrs?.fontStyle || 'normal', 
+        textDecoration: labelAttrs?.textDecoration || 'none',
+        color: labelAttrs?.fill || '#262626',
+        backgroundColor: bodyAttrs?.fill || 'transparent'
+      }
+    }
+  }
+
+  // 获取当前选中节点的样式信息
+  getSelectedNodeStyles() {
+    return this.selectedNodeStyles
+  }
+
+  // 应用样式到选中的节点
+  applyStyleToSelectedNodes(styleKey: string, styleValue: any) {
+    const selectedCells = this.graph.getSelectedCells()
+    selectedCells.forEach((cell) => {
+      if (cell.isNode()) {
+        cell.attr(`label/${styleKey}`, styleValue)
+      }
+    })
+
+    
+    // 更新存储的样式信息
+    this.selectedNodeStyles[styleKey] = styleValue
+    this.updateSelectedNodeStyles(selectedCells)
   }
 }

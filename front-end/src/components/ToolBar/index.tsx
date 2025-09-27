@@ -1,5 +1,5 @@
 import { message, Tooltip, InputNumber } from 'antd'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import styles from './index.module.less'
 import Canvas from '../EditorCore'
@@ -24,13 +24,45 @@ import ColorPickerComponent from '../Color'
 
 interface Props {
   canvas: React.RefObject<Canvas | null>
+  canvasReady?: boolean
 }
 
 const ToolBar = (props: Props) => {
-  const { canvas } = props
+  const { canvas, canvasReady } = props
   const [exportModalVisible, setExportModalVisible] = useState(false)
   const [importModalVisible, setImportModalVisible] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
+  
+  // 添加状态来跟踪当前选中节点的样式
+  const [selectedStyles, setSelectedStyles] = useState({
+    fontSize: 12,
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    textDecoration: 'none',
+    color: '#262626',
+    backgroundColor: 'transparent'
+  })
+
+  // 监听选中节点变化
+  useEffect(() => {
+    if (canvasReady && canvas.current?.graph) {
+      const graph = canvas.current.graph
+      
+      const handleSelectionChange = () => {
+        const styles = canvas.current?.getSelectedNodeStyles() || {}
+        setSelectedStyles({...selectedStyles, ...styles})
+      }
+
+      // 监听选中变化事件
+      graph.on('selection:changed', handleSelectionChange)
+      graph.on('cell:change:attrs', handleSelectionChange)
+
+      return () => {
+        graph.off('selection:changed', handleSelectionChange)
+        graph.off('cell:change:attrs', handleSelectionChange)
+      }
+    }
+  }, [canvas, canvasReady])
 
   return (
     <div className={styles.tooBar}>
@@ -54,40 +86,55 @@ const ToolBar = (props: Props) => {
         <div
           className={styles.operation}
           onClick={() => {
-            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
-              const currentWeight = cell.attr('label/fontWeight') || 'normal';
-              cell.attr('label/fontWeight', currentWeight === 'bold' ? 'normal' : 'bold');
-            })
+            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+            const newWeight = currentStyles.fontWeight === 'bold' ? 'normal' : 'bold'
+            canvas.current?.applyStyleToSelectedNodes('fontWeight', newWeight)
           }}
         >
           <Tooltip title="加粗" placement="bottom">
-            <TextBoldIcon width={16} height={16} />
+            <TextBoldIcon 
+              width={16} 
+              height={16} 
+              style={{ 
+                color: selectedStyles.fontWeight === 'bold' ? '#1890ff' : 'inherit' 
+              }}
+            />
           </Tooltip>
         </div>
         <div
           className={styles.operation}
           onClick={() => {
-            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
-              const currentStyle = cell.attr('label/fontStyle') || 'normal';
-              cell.attr('label/fontStyle', currentStyle === 'italic' ? 'normal' : 'italic');
-            })
+            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+            const newStyle = currentStyles.fontStyle === 'italic' ? 'normal' : 'italic'
+            canvas.current?.applyStyleToSelectedNodes('fontStyle', newStyle)
           }}
         >
           <Tooltip title="斜体" placement="bottom">
-            <TextItalicIcon width={16} height={16} />
+            <TextItalicIcon 
+              width={16} 
+              height={16}
+              style={{ 
+                color: selectedStyles.fontStyle === 'italic' ? '#1890ff' : 'inherit' 
+              }}
+            />
           </Tooltip>
         </div>
         <div
           className={styles.operation}
           onClick={() => {
-            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
-              const currentStyle = cell.attr('label/textDecoration') || 'normal';
-              cell.attr('label/textDecoration', currentStyle === 'underline' ? 'normal' : 'underline');
-            })
+            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+            const newDecoration = currentStyles.textDecoration === 'underline' ? 'none' : 'underline'
+            canvas.current?.applyStyleToSelectedNodes('textDecoration', newDecoration)
           }}
         >
           <Tooltip title="下划线" placement="bottom">
-            <TextUnderlineIcon width={16} height={16} />
+            <TextUnderlineIcon 
+              width={16} 
+              height={16}
+              style={{ 
+                color: selectedStyles.textDecoration === 'underline' ? '#1890ff' : 'inherit' 
+              }}
+            />
           </Tooltip>
         </div>
         <div className={styles.operation}>
@@ -95,12 +142,12 @@ const ToolBar = (props: Props) => {
             <InputNumber
               min={8}
               max={100}
-              size='small'
-              style={{ width: 60 }}
+              value={selectedStyles.fontSize}
+              style={{ width: 60, height: 32 }}
               onChange={(value) => {
-                canvas.current?.graph?.getSelectedCells().forEach((cell) => {
-                  cell.attr('label/fontSize', value)
-                })
+                if (value) {
+                  canvas.current?.applyStyleToSelectedNodes('fontSize', value)
+                }
               }}
             />
           </Tooltip>
@@ -110,6 +157,7 @@ const ToolBar = (props: Props) => {
             <div className={styles.colorPickerWrapper}>
               <FontSizeIcon width={14} height={14} />
               <ColorPickerComponent
+                defaultValue={selectedStyles.color}
                 onChange={(color) => {
                   canvas.current?.graph?.getSelectedCells().forEach((cell) => {
                     cell.attr('label/fill', color.toCssString())
@@ -119,19 +167,12 @@ const ToolBar = (props: Props) => {
             </div>
           </Tooltip>
         </div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            canvas.current?.graph?.getSelectedCells().forEach((cell) => {
-              const currentColor = cell.attr('label/backgroundColor') || 'normal';
-              cell.attr('label/backgroundColor', currentColor === 'normal' ? 'red' : 'normal');
-            })
-          }}
-        >
+        <div className={styles.operation}>
           <Tooltip title="背景颜色" placement="bottom">
             <div className={styles.colorPickerWrapper}>
               <BacIcon width={16} height={16} />
               <ColorPickerComponent
+                defaultValue={selectedStyles.backgroundColor}
                 onChange={(color) => {
                   canvas.current?.graph?.getSelectedCells().forEach((cell) => {
                     cell.attr('body/fill', color.toCssString())
