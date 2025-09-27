@@ -95,6 +95,7 @@ const ToolBar = (props: Props) => {
           className={styles.operation}
           onClick={() => {
             if (canvas.current) {
+              
               setExportModalVisible(true)
               // const data = canvas.current.graph.toJSON()
               // const dataStr = JSON.stringify(data)
