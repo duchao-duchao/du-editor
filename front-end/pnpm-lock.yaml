@@ -26,6 +26,9 @@ importers:
       '@antv/x6-plugin-keyboard':
         specifier: ^2.2.3
         version: 2.2.3(@antv/x6@2.18.1)
+      '@antv/x6-plugin-minimap':
+        specifier: ^2.0.7
+        version: 2.0.7(@antv/x6@2.18.1)
       '@antv/x6-plugin-selection':
         specifier: ^2.2.2
         version: 2.2.2(@antv/x6@2.18.1)
@@ -143,6 +146,11 @@ packages:
 
   '@antv/x6-plugin-keyboard@2.2.3':
     resolution: {integrity: sha512-pnCIC+mDyKKfkcDyLePfGxKVIqXBcldTgannITkHC1kc0IafRS1GMvzpvuDGrM5haRYd6Nwz8kjkJyHkJE4GPA==}
+    peerDependencies:
+      '@antv/x6': ^2.x
+
+  '@antv/x6-plugin-minimap@2.0.7':
+    resolution: {integrity: sha512-8zzESCx0jguFPCOKCA0gPFb6JmRgq81CXXtgJYe34XhySdZ6PB23I5Po062lNsEuTjTjnzli4lju8vvU+jzlGw==}
     peerDependencies:
       '@antv/x6': ^2.x
 
@@ -1580,6 +1588,10 @@ snapshots:
     dependencies:
       '@antv/x6': 2.18.1
       mousetrap: 1.6.5
+
+  '@antv/x6-plugin-minimap@2.0.7(@antv/x6@2.18.1)':
+    dependencies:
+      '@antv/x6': 2.18.1
 
   '@antv/x6-plugin-selection@2.2.2(@antv/x6@2.18.1)':
     dependencies:

@@ -7,6 +7,7 @@ import { Keyboard } from '@antv/x6-plugin-keyboard'
 import { Clipboard } from '@antv/x6-plugin-clipboard'
 import { History } from '@antv/x6-plugin-history'
 import { Export } from '@antv/x6-plugin-export'
+import { MiniMap } from '@antv/x6-plugin-minimap'
 
 import Utils from './utils'
 import { ports } from './const'
@@ -15,6 +16,7 @@ export default class Canvas {
   graph: Graph
   graphContainer: HTMLElement
   stencilContainer: HTMLElement
+  miniMapContainer: HTMLElement
   utils: Utils
   stencil: Stencil
   selectedNodeStyles: {
@@ -29,6 +31,7 @@ export default class Canvas {
   constructor(props) {
     this.graphContainer = props.graphContainer
     this.stencilContainer = props.stencilContainer
+    this.miniMapContainer = props.miniMapContainer
     this.init()
   }
 
@@ -131,6 +134,12 @@ export default class Canvas {
       .use(new Clipboard())
       .use(new History())
       .use(new Export())
+      .use(
+          new MiniMap({
+            container: this.miniMapContainer,
+          }),
+        )
+      
 
     this.utils = new Utils({ canvas: this })
 
