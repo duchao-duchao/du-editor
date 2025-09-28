@@ -273,7 +273,7 @@ export default class Canvas {
         height: 36,
         attrs: {
           body: {
-            strokeWidth: 1,
+            strokeWidth: 2,
           },
           text: {
             fontSize: 12,
@@ -303,7 +303,7 @@ export default class Canvas {
         height: 36,
         attrs: {
           body: {
-            strokeWidth: 1,
+            strokeWidth: 2,
           },
           text: {
             fontSize: 12,
@@ -312,14 +312,6 @@ export default class Canvas {
         },
         ports: {
           ...ports,
-          // items: [
-          //   {
-          //     group: 'top',
-          //   },
-          //   {
-          //     group: 'bottom',
-          //   },
-          // ],
         },
         tools: [
           {
@@ -343,7 +335,7 @@ export default class Canvas {
         height: 45,
         attrs: {
           body: {
-            strokeWidth: 1,
+            strokeWidth: 2,
           },
           text: {
             fontSize: 12,
@@ -561,8 +553,46 @@ export default class Canvas {
       },
     })
 
+    // 箭头 - 向左
+    const r14 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 40,
+      height: 20,
+      attrs: {
+        body: {
+          refPoints: '0,10 15,0 15,6 40,6 40,14 15,14 15,20'
+        },
+      },
+    })
+
+    // 箭头 - 向右
+    const r15 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 40,
+      height: 20,
+      attrs: {
+        body: {
+          refPoints: '0,6 25,6 25,0 40,10 25,20 25,14 0,14'
+        },
+      },
+    })
+
+    // 对话气泡（黑色描边，白底，左下尾巴）
+    const r16 = graph.createNode({
+      shape: 'custom-polygon',
+      width: 40,
+      height: 25,
+      attrs: {
+        body: {
+          refPoints: '6,10 12,4 22,0 34,0 44,4 50,12 50,20 44,28 34,32 22,32 16,34 12,38 12,30 8,28 4,24 2,20 2,14',
+          fill: '#ffffff',
+          stroke: '#262626',
+        }
+      }
+    })
+
     // 创建分组
-    stencil.load([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13], 'group1')
+    stencil.load([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16], 'group1')
   }
 
   // 更新选中节点的样式信息
