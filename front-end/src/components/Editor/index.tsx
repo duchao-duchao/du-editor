@@ -31,8 +31,6 @@ const Editor = () => {
     
     canvas.current = new Canvas({ graphContainer, stencilContainer, miniMapContainer })
     window.canvas = canvas.current
-    canvas.current.graph.zoom(0.8)
-    canvas.current.graph.centerContent()
     setCanvasReady(true)
   }
 

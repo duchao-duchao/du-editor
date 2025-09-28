@@ -49,7 +49,7 @@ export default class Canvas {
       grid: {
         visible: true,
         type: 'mesh',
-        size: 16,
+        size: 8,
       },
       panning: {
         enabled: true,

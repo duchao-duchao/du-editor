@@ -78,7 +78,10 @@ const ToolBar = (props: Props) => {
             <ForwardIcon width={18} height={18} />
           </Tooltip>
         </div>
-        <div className={styles.operation} onClick={() => canvas.current?.graph.centerContent()}>
+        <div className={styles.operation} onClick={() => {
+          // canvas.current?.graph.centerContent()
+          canvas.current?.graph.zoomToFit({ padding: 20, maxScale: 1 })
+        }}>
           <Tooltip title="居中" placement="bottom">
             <FocusIcon width={18} height={18} />
           </Tooltip>
@@ -183,7 +186,7 @@ const ToolBar = (props: Props) => {
             </div>
           </Tooltip>
         </div>
-                  <Popover
+        <Popover
             placement="bottom"
             content={
               <div>
