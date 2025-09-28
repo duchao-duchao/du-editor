@@ -89,7 +89,7 @@ export default class Canvas {
                 },
               },
             },
-            zIndex: 0,
+            zIndex: 10,
             tools: [
               {
                 name: 'edge-editor',
@@ -271,6 +271,166 @@ export default class Canvas {
       ) as NodeListOf<SVGElement>
       this.utils.showPorts(ports, false)
     })
+
+    // 右键菜单事件
+    graph.on('cell:contextmenu', ({ cell, e }) => {
+      e.preventDefault()
+      this.showContextMenu(cell, e)
+    })
+
+    graph.on('blank:contextmenu', ({ e }) => {
+      e.preventDefault()
+      this.hideContextMenu()
+    })
+
+    // 点击其他地方隐藏菜单
+    graph.on('cell:click', () => {
+      this.hideContextMenu()
+    })
+
+    graph.on('blank:click', () => {
+      this.hideContextMenu()
+    })
+  }
+
+  // 显示右键菜单
+  showContextMenu(cell: any, e: MouseEvent) {
+    this.hideContextMenu() // 先隐藏之前的菜单
+    
+    const menuId = 'context-menu'
+    const menu = document.createElement('div')
+    menu.id = menuId
+    menu.className = 'context-menu'
+    menu.style.cssText = `
+      position: fixed;
+      top: ${e.clientY}px;
+      left: ${e.clientX}px;
+      background: white;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 4px 0;
+      z-index: 1000;
+      min-width: 120px;
+      font-size: 14px;
+    `
+
+    const menuItems = [
+      {
+        label: '复制',
+        action: () => this.copyCell(cell),
+        icon: '📋'
+      },
+      {
+        label: '删除',
+        action: () => this.deleteCell(cell),
+        icon: '🗑️'
+      },
+      { type: 'divider' },
+      {
+        label: '上移一层',
+        action: () => {
+          cell.setZIndex(cell.getZIndex() + 1)
+        },
+        icon: '⬆️'
+      },
+      {
+        label: '下移一层',
+        action: () => {
+          cell.setZIndex(cell.getZIndex() - 1)
+        },
+        icon: '⬇️'
+      },
+      {
+        label: '置与顶部',
+        action: () => this.moveToFront(cell),
+        icon: '💟'
+      },
+      {
+        label: '置与底部',
+        action: () => this.moveToBack(cell),
+        icon: '♎️'
+      },
+    ]
+
+    menuItems.forEach(item => {
+      if (item.type === 'divider') {
+        const divider = document.createElement('div')
+        divider.style.cssText = `
+          height: 1px;
+          background: #f0f0f0;
+          margin: 4px 0;
+        `
+        menu.appendChild(divider)
+      } else {
+        const menuItem = document.createElement('div')
+        menuItem.className = 'context-menu-item'
+        menuItem.style.cssText = `
+          padding: 8px 16px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          transition: background-color 0.2s;
+        `
+        menuItem.innerHTML = `<span>${item.icon}</span><span>${item.label}</span>`
+        
+        menuItem.addEventListener('mouseenter', () => {
+          menuItem.style.backgroundColor = '#f5f5f5'
+        })
+        
+        menuItem.addEventListener('mouseleave', () => {
+          menuItem.style.backgroundColor = 'transparent'
+        })
+        
+        menuItem.addEventListener('click', () => {
+          item.action()
+          this.hideContextMenu()
+        })
+        
+        menu.appendChild(menuItem)
+      }
+    })
+
+    document.body.appendChild(menu)
+
+    // 调整菜单位置，确保不超出屏幕
+    const rect = menu.getBoundingClientRect()
+    if (rect.right > window.innerWidth) {
+      menu.style.left = `${e.clientX - rect.width}px`
+    }
+    if (rect.bottom > window.innerHeight) {
+      menu.style.top = `${e.clientY - rect.height}px`
+    }
+  }
+
+  // 隐藏右键菜单
+  hideContextMenu() {
+    const existingMenu = document.getElementById('context-menu')
+    if (existingMenu) {
+      existingMenu.remove()
+    }
+  }
+
+  // 复制单元格
+  copyCell(cell: any) {
+    this.graph.select(cell)
+    this.graph.copy([cell])
+  }
+
+  // 删除单元格
+  deleteCell(cell: any) {
+    this.graph.removeCell(cell)
+  }
+
+  // 置与顶部
+  moveToFront(cell: any) {
+    cell.toFront()
+  }
+
+  // 置与底部
+  moveToBack(cell: any) {
+    cell.toBack()
   }
 
   registerNode() {
@@ -278,6 +438,7 @@ export default class Canvas {
       'custom-rect',
       {
         inherit: 'rect',
+        zIndex: 1,
         width: 66,
         height: 36,
         attrs: {
@@ -308,6 +469,7 @@ export default class Canvas {
       'custom-polygon',
       {
         inherit: 'polygon',
+        zIndex: 1,
         width: 66,
         height: 36,
         attrs: {
@@ -340,6 +502,7 @@ export default class Canvas {
       'custom-circle',
       {
         inherit: 'circle',
+        zIndex: 1,
         width: 45,
         height: 45,
         attrs: {
@@ -370,6 +533,7 @@ export default class Canvas {
       'custom-image',
       {
         inherit: 'rect',
+        zIndex: 1,
         width: 52,
         height: 52,
         markup: [

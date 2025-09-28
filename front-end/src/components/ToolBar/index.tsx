@@ -1,4 +1,4 @@
-import { message, Tooltip, InputNumber } from 'antd'
+import { message, Tooltip, InputNumber, Popover } from 'antd'
 import { useState, useEffect } from 'react'
 
 import styles from './index.module.less'
@@ -17,6 +17,7 @@ import {
   TextBoldIcon,
   TextItalicIcon,
   TextUnderlineIcon,
+  CengjiIcon,
 } from '../../assets/svg/svgList' 
 import ExportModal from '../Modals/ExportModal'
 import ImportModal from '../Modals/ImportModal'
@@ -182,6 +183,29 @@ const ToolBar = (props: Props) => {
             </div>
           </Tooltip>
         </div>
+                  <Popover
+            placement="bottom"
+            content={
+              <div>
+                <div className={styles.operationItem} onClick={() => canvas.current?.graph?.getSelectedCells().forEach((cell) => cell.setZIndex(cell.getZIndex() + 1))}>
+                  ⬆️ 上移一层
+                </div>
+                <div className={styles.operationItem} onClick={() => canvas.current?.graph?.getSelectedCells().forEach((cell) => cell.setZIndex(cell.getZIndex() - 1))}>
+                  ⬇️ 下移一层
+                </div>
+                <div className={styles.operationItem} onClick={() => canvas.current?.graph?.getSelectedCells().forEach((cell) => cell.toFront())}>
+                  💟 置与顶部
+                </div>
+                <div className={styles.operationItem} onClick={() => canvas.current?.graph?.getSelectedCells().forEach((cell) => cell.toBack())}>
+                  ♎️ 置与底部
+                </div>
+              </div>
+            }
+          >
+          <div className={styles.operation}>
+            <CengjiIcon width={18} height={18} />
+          </div>
+        </Popover>
       </div>
       <div className={styles.right}>
         <div
