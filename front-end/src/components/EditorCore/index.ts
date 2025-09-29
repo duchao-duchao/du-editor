@@ -11,6 +11,7 @@ import { MiniMap } from '@antv/x6-plugin-minimap'
 
 import Utils from './utils'
 import { ports } from './const'
+import ThemeManage from './theme'
 
 export default class Canvas {
   graph: Graph
@@ -27,7 +28,8 @@ export default class Canvas {
     color?: string
     backgroundColor?: string
   } = {}
-
+  themeManage: ThemeManage
+  
   constructor(props) {
     this.graphContainer = props.graphContainer
     this.stencilContainer = props.stencilContainer
@@ -36,6 +38,7 @@ export default class Canvas {
   }
 
   init() {
+    this.themeManage = new ThemeManage({ canvas: this })
     this.initGraph()
     this.initPlugin()
     this.bindEvent()
@@ -44,6 +47,7 @@ export default class Canvas {
   }
 
   initGraph() {
+    const _this = this
     this.graph = new Graph({
       container: this.graphContainer,
       grid: {
@@ -72,21 +76,26 @@ export default class Canvas {
         },
         anchor: 'center',
         connectionPoint: 'anchor',
-        allowBlank: false,
+        allowBlank: true,
+
         snap: {
           radius: 20,
         },
+        allowEdge: true,
+        allowNode: true,
+        allowLoop: true,
         createEdge() {
           return new Shape.Edge({
             attrs: {
               line: {
-                // stroke: '#A2B1C3',
+                stroke: '#A2B1C3',
                 strokeWidth: 1,
                 targetMarker: {
                   name: 'block',
                   width: 12,
                   height: 8,
                 },
+                ..._this.themeManage.themes[_this.themeManage.currentTheme].edgeStyles
               },
             },
             zIndex: 10,
@@ -587,6 +596,8 @@ export default class Canvas {
 
   loadCustomNode() {
     const { stencil, graph } = this
+    const theme = this.themeManage.themes[this.themeManage.currentTheme]
+    
     const r1 = graph.createNode({
       shape: 'custom-rect',
       width: 30,
@@ -595,13 +606,26 @@ export default class Canvas {
         body: {
           rx: 20,
           ry: 20,
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
+
     const r2 = graph.createNode({
       shape: 'custom-rect',
       width: 30,
       height: 10,
+      attrs: {
+        body: {
+          ...theme.nodeStyles,
+        },
+        label: {
+          ...theme.textStyles,
+        }
+      },
     })
     const r3 = graph.createNode({
       shape: 'custom-rect',
@@ -611,7 +635,11 @@ export default class Canvas {
         body: {
           rx: 6,
           ry: 6,
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     const r4 = graph.createNode({
@@ -621,7 +649,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '0,10 10,0 20,10 10,20',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     const r5 = graph.createNode({
@@ -631,13 +663,25 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '10,0 40,0 30,20 0,20',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     const r6 = graph.createNode({
       shape: 'custom-circle',
       width: 30,
       height: 30,
+      attrs: {
+        body: {
+          ...theme.nodeStyles,
+        },
+        label: {
+          ...theme.textStyles,
+        }
+      },
     })
     
     // 新增图形
@@ -650,7 +694,11 @@ export default class Canvas {
         body: {
           rx: 20,
           ry: 10,
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -662,7 +710,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '15,0 30,15 15,30 0,15',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -674,7 +726,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '15,0 30,30 0,30',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -686,7 +742,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '10,0 30,0 40,15 30,30 10,30 0,15',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -698,7 +758,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '15,0 18,10 30,10 20,17 24,30 15,22 6,30 10,17 0,10 12,10',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -710,7 +774,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '5,15 0,10 5,5 15,0 25,5 35,0 40,10 35,20 25,25 15,20',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
     
@@ -722,7 +790,11 @@ export default class Canvas {
       attrs: {
         body: {
           refPoints: '0,0 60,0 60,20 30,30 0,20',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
 
@@ -733,8 +805,12 @@ export default class Canvas {
       height: 20,
       attrs: {
         body: {
-          refPoints: '0,10 15,0 15,6 40,6 40,14 15,14 15,20'
+          refPoints: '0,10 15,0 15,6 40,6 40,14 15,14 15,20',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
 
@@ -745,8 +821,12 @@ export default class Canvas {
       height: 20,
       attrs: {
         body: {
-          refPoints: '0,6 25,6 25,0 40,10 25,20 25,14 0,14'
+          refPoints: '0,6 25,6 25,0 40,10 25,20 25,14 0,14',
+          ...theme.nodeStyles,
         },
+        label: {
+          ...theme.textStyles,
+        }
       },
     })
 
@@ -760,12 +840,18 @@ export default class Canvas {
           refPoints: '6,10 12,4 22,0 34,0 44,4 50,12 50,20 44,28 34,32 22,32 16,34 12,38 12,30 8,28 4,24 2,20 2,14',
           fill: '#ffffff',
           stroke: '#262626',
+          ...theme.nodeStyles,
+        },
+        label: {
+          ...theme.textStyles,
         }
       }
     })
 
+    // 在创建分组后，为所有节点应用主题类名
+    const allNodes = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16]
     // 创建分组
-    stencil.load([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16], 'group1')
+    stencil.load(allNodes, 'group1')
   }
 
   // 更新选中节点的样式信息
@@ -808,8 +894,7 @@ export default class Canvas {
         cell.attr(`label/${styleKey}`, styleValue)
       }
     })
-
-    
+   
     // 更新存储的样式信息
     this.selectedNodeStyles[styleKey] = styleValue
     this.updateSelectedNodeStyles(selectedCells)

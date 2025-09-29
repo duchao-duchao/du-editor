@@ -53,11 +53,23 @@
   }
 }
 
+
+.themeList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
 .operationItem {
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
   &:hover {
     background-color: #f5f5f5; // 设置悬停时的背景颜色
+  }
+  .themeImage {
+    width: 100px;
+    height: 40px;
   }
 }

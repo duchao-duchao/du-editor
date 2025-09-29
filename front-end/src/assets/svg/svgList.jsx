@@ -127,3 +127,12 @@ export const CengjiIcon = (props) => {
     </svg>
   )
 }
+
+export const ThemeIcon = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" {...props}>
+      <path stroke-linejoin="round" stroke-width="4" stroke="currentColor" d="M18 6a6 6 0 0 0 12 0h5.455L42 15.818l-5.727 4.91V42H11.727V20.727L6 15.818 12.546 6H18Z" data-follow-stroke="#333"/>
+    </svg>
+  )
+}

@@ -18,10 +18,15 @@ import {
   TextItalicIcon,
   TextUnderlineIcon,
   CengjiIcon,
+  ThemeIcon,
 } from '../../assets/svg/svgList' 
 import ExportModal from '../Modals/ExportModal'
 import ImportModal from '../Modals/ImportModal'
 import ColorPickerComponent from '../Color'
+import theme1Image from '../../assets/images/theme1.png'
+import theme2Image from '../../assets/images/theme2.png'
+import theme3Image from '../../assets/images/theme3.png'
+import theme4Image from '../../assets/images/theme4.png'
 
 interface Props {
   canvas: React.RefObject<Canvas | null>
@@ -68,34 +73,34 @@ const ToolBar = (props: Props) => {
   return (
     <div className={styles.tooBar}>
       <div className={styles.left}>
-        <div className={styles.operation} onClick={() => canvas.current?.graph.undo()}>
-          <Tooltip title="撤销" placement="bottom">
+        <Tooltip title="撤销" placement="bottom">
+          <div className={styles.operation} onClick={() => canvas.current?.graph.undo()}>
             <BackIcon width={18} height={18} />
-          </Tooltip>
-        </div>
-        <div className={styles.operation} onClick={() => canvas.current?.graph.redo()}>
-          <Tooltip title="重做" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="重做" placement="bottom">
+          <div className={styles.operation} onClick={() => canvas.current?.graph.redo()}>
             <ForwardIcon width={18} height={18} />
-          </Tooltip>
-        </div>
-        <div className={styles.operation} onClick={() => {
-          // canvas.current?.graph.centerContent()
-          canvas.current?.graph.zoomToFit({ padding: 20, maxScale: 1 })
-        }}>
-          <Tooltip title="居中" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="居中" placement="bottom">
+          <div className={styles.operation} onClick={() => {
+            // canvas.current?.graph.centerContent()
+            canvas.current?.graph.zoomToFit({ padding: 20, maxScale: 1 })
+          }}>
             <FocusIcon width={18} height={18} />
-          </Tooltip>
-        </div>
+          </div>
+        </Tooltip>
         <div className={styles.line}></div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
-            const newWeight = currentStyles.fontWeight === 'bold' ? 'normal' : 'bold'
-            canvas.current?.applyStyleToSelectedNodes('fontWeight', newWeight)
-          }}
-        >
-          <Tooltip title="加粗" placement="bottom">
+        <Tooltip title="加粗" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+              const newWeight = currentStyles.fontWeight === 'bold' ? 'normal' : 'bold'
+              canvas.current?.applyStyleToSelectedNodes('fontWeight', newWeight)
+            }}
+          >
             <TextBoldIcon 
               width={16} 
               height={16} 
@@ -103,17 +108,17 @@ const ToolBar = (props: Props) => {
                 color: selectedStyles.fontWeight === 'bold' ? '#1890ff' : 'inherit' 
               }}
             />
-          </Tooltip>
-        </div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
-            const newStyle = currentStyles.fontStyle === 'italic' ? 'normal' : 'italic'
-            canvas.current?.applyStyleToSelectedNodes('fontStyle', newStyle)
-          }}
-        >
-          <Tooltip title="斜体" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="斜体" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+              const newStyle = currentStyles.fontStyle === 'italic' ? 'normal' : 'italic'
+              canvas.current?.applyStyleToSelectedNodes('fontStyle', newStyle)
+            }}
+          >
             <TextItalicIcon 
               width={16} 
               height={16}
@@ -121,17 +126,17 @@ const ToolBar = (props: Props) => {
                 color: selectedStyles.fontStyle === 'italic' ? '#1890ff' : 'inherit' 
               }}
             />
-          </Tooltip>
-        </div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
-            const newDecoration = currentStyles.textDecoration === 'underline' ? 'none' : 'underline'
-            canvas.current?.applyStyleToSelectedNodes('textDecoration', newDecoration)
-          }}
-        >
-          <Tooltip title="下划线" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="下划线" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              const currentStyles = canvas.current?.getSelectedNodeStyles() || {}
+              const newDecoration = currentStyles.textDecoration === 'underline' ? 'none' : 'underline'
+              canvas.current?.applyStyleToSelectedNodes('textDecoration', newDecoration)
+            }}
+          >
             <TextUnderlineIcon 
               width={16} 
               height={16}
@@ -139,10 +144,10 @@ const ToolBar = (props: Props) => {
                 color: selectedStyles.textDecoration === 'underline' ? '#1890ff' : 'inherit' 
               }}
             />
-          </Tooltip>
-        </div>
-        <div className={styles.operation}>
-          <Tooltip title="字体大小" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="字体大小" placement="bottom">
+          <div className={styles.operation}>
             <InputNumber
               min={8}
               max={100}
@@ -154,10 +159,10 @@ const ToolBar = (props: Props) => {
                 }
               }}
             />
-          </Tooltip>
-        </div>
-        <div className={styles.operation}>
-          <Tooltip title="字体颜色" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="字体颜色" placement="bottom">
+          <div className={styles.operation}>
             <div className={styles.colorPickerWrapper}>
               <FontSizeIcon width={14} height={14} />
               <ColorPickerComponent
@@ -169,10 +174,10 @@ const ToolBar = (props: Props) => {
                 }}
               />
             </div>
-          </Tooltip>
-        </div>
-        <div className={styles.operation}>
-          <Tooltip title="背景颜色" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="背景颜色" placement="bottom">
+          <div className={styles.operation}>
             <div className={styles.colorPickerWrapper}>
               <BacIcon width={16} height={16} />
               <ColorPickerComponent
@@ -184,8 +189,8 @@ const ToolBar = (props: Props) => {
                 }}
               />
             </div>
-          </Tooltip>
-        </div>
+          </div>
+        </Tooltip>
         <Popover
             placement="bottom"
             content={
@@ -211,49 +216,72 @@ const ToolBar = (props: Props) => {
         </Popover>
       </div>
       <div className={styles.right}>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            canvas.current?.graph.getSelectedCells().forEach((cell) => {
-              cell.remove()
-            })
-          }}
+        <Popover
+          placement="bottom"
+          content={
+            <div className={styles.themeList}>
+              <div className={styles.operationItem} onClick={() => canvas.current?.themeManage.switchTheme('skyblue')}>
+                <img className={styles.themeImage} src={theme2Image} alt="" />
+              </div>
+              <div className={styles.operationItem} onClick={() => canvas.current?.themeManage.switchTheme('minimal')}>
+                <img className={styles.themeImage} src={theme1Image} alt="" />
+              </div>
+              <div className={styles.operationItem} onClick={() => canvas.current?.themeManage.switchTheme('dark')}>
+                <img className={styles.themeImage} src={theme3Image} alt="" />
+              </div>
+              <div className={styles.operationItem} onClick={() => canvas.current?.themeManage.switchTheme('sketch')}>
+                <img className={styles.themeImage} src={theme4Image} alt="" />
+              </div>
+            </div>
+          }
         >
-          <Tooltip title="删除" placement="bottom">
+          <div className={styles.operation}>
+            <ThemeIcon width={18} height={18} />
+          </div>
+        </Popover>
+        <Tooltip title="删除" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              canvas.current?.graph.getSelectedCells().forEach((cell) => {
+                cell.remove()
+              })
+            }}
+          >
             <DelIcon width={18} height={18} />
-          </Tooltip>
-        </div>
-        <div className={styles.operation} onClick={() => setImportModalVisible(true)}>
-          <Tooltip title="导入" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="导入" placement="bottom">
+          <div className={styles.operation} onClick={() => setImportModalVisible(true)}>
             <ImportIcon width={18} height={18} />
-          </Tooltip>
-        </div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            if (canvas.current) {
-              setExportModalVisible(true)
-            }
-          }}
-        >
-          <Tooltip title="导出" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="导出" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              if (canvas.current) {
+                setExportModalVisible(true)
+              }
+            }}
+          >
             <ExportIcon width={18} height={18} />
-          </Tooltip>
-        </div>
-        <div
-          className={styles.operation}
-          onClick={() => {
-            if (!document.fullscreenElement) {
-              document.documentElement.requestFullscreen()
-            } else if (document.exitFullscreen) {
-              document.exitFullscreen()
-            }
-          }}
-        >
-          <Tooltip title="全屏" placement="bottom">
+          </div>
+        </Tooltip>
+        <Tooltip title="全屏" placement="bottom">
+          <div
+            className={styles.operation}
+            onClick={() => {
+              if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+              } else if (document.exitFullscreen) {
+                document.exitFullscreen()
+              }
+            }}
+          >
             <FullScreenIcon width={18} height={18} />
-          </Tooltip>
-        </div>
+          </div>
+        </Tooltip>
       </div>
 
       <ExportModal
