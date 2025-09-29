@@ -1,5 +1,15 @@
 # du-editor
 基于X6的流程图编辑器
+feature：
+- 纯前端零后端，数据不出本地，安全无忧  
+- 专为图编辑学习者打造，源码级参考范例  
+- 节点类型一应俱全，拖即用，创意不设限  
+- 一键导出 PNG、SVG、PDF、JSON，分享与存档都方便  
+- 一键换肤，内置多款主题，明暗随心  
+- Web、Windows、macOS 全平台覆盖，随时随地作图  
+- 支持 JSON 导入导出，版本管理与协作更轻松
+
+
 ![demo1](./front-end/src/assets/images/demo1.png)
 ![demo2](./front-end/src/assets/images/demo2.png)
 ![demo3](./front-end/src/assets/images/demo3.png)
