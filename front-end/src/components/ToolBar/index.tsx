@@ -1,4 +1,4 @@
-import { message, Tooltip, InputNumber, Popover } from 'antd'
+import { message, Tooltip, InputNumber, Popover, Switch } from 'antd'
 import { useState, useEffect } from 'react'
 
 import styles from './index.module.less'
@@ -216,6 +216,7 @@ const ToolBar = (props: Props) => {
         </Popover>
       </div>
       <div className={styles.right}>
+        <Switch checkedChildren='手绘模式' onChange={(e) =>canvas.current?.themeManage.switchSketch(e)} unCheckedChildren='关闭手绘' />
         <Popover
           placement="bottom"
           content={

@@ -55,6 +55,26 @@ const Editor = () => {
         <div className={styles.canvas_container} id="canvas_container"></div>
       </div>
       <div className={styles.miniMapContainer} id='mini_map'></div>
+      <svg width="0" height="0">
+        <defs>
+          <filter id="filter-sketch">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.07"
+              numOctaves="10"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="4"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="displaced"
+            />
+          </filter>
+        </defs>
+      </svg>
     </div>
   )
 }

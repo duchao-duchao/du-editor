@@ -75,7 +75,7 @@ export default class Canvas {
           },
         },
         anchor: 'center',
-        connectionPoint: 'anchor',
+        connectionPoint: 'boundary',
         allowBlank: true,
 
         snap: {
@@ -106,9 +106,11 @@ export default class Canvas {
             ],
           })
         },
-        validateConnection({ targetMagnet }) {
-          return !!targetMagnet
+        validateConnection({ targetCell, sourceCell }) {
+          return true;
         },
+        validateEdge: () => true,
+        validateMagnet: () => true,
       },
       highlighting: {
         magnetAdsorbed: {
@@ -453,6 +455,7 @@ export default class Canvas {
         attrs: {
           body: {
             strokeWidth: 2,
+            // magnet: true,
           },
           text: {
             fontSize: 12,

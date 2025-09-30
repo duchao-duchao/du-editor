@@ -6,9 +6,16 @@ export default class ThemeManage {
   // 主题配置
   themes = themesList
   currentTheme: string = 'minimal'
+  sketchFlag: boolean = false
 
   constructor(props) {
     this.canvas = props.canvas
+  }
+
+  // 切换手绘风格
+  switchSketch(flag: boolean) {
+    this.sketchFlag = flag
+    this.switchTheme(this.currentTheme)
   }
 
   // 切换主题
@@ -20,6 +27,11 @@ export default class ThemeManage {
 
     this.currentTheme = themeName
     const theme = this.themes[themeName]
+    if (this.sketchFlag) {
+      theme.nodeStyles.filter = 'url(#filter-sketch)'
+    } else {
+      theme.nodeStyles.filter = ''
+    }
     
     // 更新画布背景和网格
     this.updateCanvasTheme(theme)
