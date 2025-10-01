@@ -296,7 +296,7 @@ const ToolBar = (props: Props) => {
           const width = area.width * scale
           const height = area.height * scale
           if (data.fileType === 'image') {
-            canvas.current?.graph.exportPNG(data.fileName, { width, height, quality: 1, padding: 20 })
+            canvas.current?.graph.exportPNG(data.fileName, { width, height, quality: data?.imageConfig?.quality, padding: data?.imageConfig?.padding, backgroundColor: data?.imageConfig?.backgroundColor })
           }
           if (data.fileType === 'svg') {
             canvas.current?.graph.exportSVG(data.fileName, { preserveDimensions: true })

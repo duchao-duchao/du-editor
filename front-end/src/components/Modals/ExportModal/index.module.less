@@ -47,6 +47,7 @@
       .label {
         font-weight: 500;
         margin-bottom: 8px;
+        color: #262626;
       }
       
       .optionLabel {
@@ -54,7 +55,22 @@
       }
       
       .description {
-        margin-bottom: 16px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: #8c8c8c;
+        line-height: 1.4;
+      }
+
+      .colorPickerWrapper {
+        .ant-color-picker-trigger {
+          width: 100% !important;
+          height: 32px;
+          
+          .ant-color-picker-color-block {
+            width: 20px;
+            height: 20px;
+          }
+        }
       }
     }
   }
