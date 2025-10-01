@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/colors": "^7.2.1",
+    "@ant-design/icons": "^6.1.0",
     "@antv/x6": "^2.18.1",
     "@antv/x6-plugin-clipboard": "^2.1.6",
     "@antv/x6-plugin-export": "^2.1.6",
@@ -21,6 +22,7 @@
     "@antv/x6-plugin-snapline": "^2.1.7",
     "@antv/x6-plugin-stencil": "^2.1.5",
     "@antv/x6-plugin-transform": "^2.1.8",
+    "@antv/x6-react-shape": "^2.2.3",
     "antd": "^5.27.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"

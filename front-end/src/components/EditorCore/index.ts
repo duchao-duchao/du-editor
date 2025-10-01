@@ -8,10 +8,12 @@ import { Clipboard } from '@antv/x6-plugin-clipboard'
 import { History } from '@antv/x6-plugin-history'
 import { Export } from '@antv/x6-plugin-export'
 import { MiniMap } from '@antv/x6-plugin-minimap'
+import { register } from '@antv/x6-react-shape'
 
 import Utils from './utils'
 import { ports } from './const'
 import ThemeManage from './theme'
+import ImageNode from '../Nodes/ImageNode'
 
 export default class Canvas {
   graph: Graph
@@ -29,6 +31,7 @@ export default class Canvas {
     backgroundColor?: string
   } = {}
   themeManage: ThemeManage
+  // edgeConnectNolimit: boolean = false
   
   constructor(props) {
     this.graphContainer = props.graphContainer
@@ -103,6 +106,7 @@ export default class Canvas {
               {
                 name: 'edge-editor',
               },
+              { name: 'vertices' },
             ],
           })
         },
@@ -165,24 +169,24 @@ export default class Canvas {
           title: '基础图形',
           name: 'group1',
         },
+        {
+          title: '高级图形',
+          name: 'group2',
+        },
       ],
       layoutOptions: {
         columns: 5,
         columnWidth: 45,
         rowHeight: 45,
       },
+      // 自定义从 stencil 拖拽到画布时的节点
+      getDropNode(draggingNode) {
+        const { width, height } = draggingNode.getSize()
+        // 返回一个放大 2 倍的节点
+        return draggingNode.clone().resize(width * 2, height * 2)
+      },
     })
     this.stencilContainer.appendChild(this.stencil.container)
-    
-    // 添加事件监听器，当节点从 stencil 拖拽到画布时，将其大小放大 2 倍
-    this.graph.on('node:added', ({ node }) => {
-      // 获取节点当前大小
-      const width = node.getSize().width
-      const height = node.getSize().height
-      
-      // 将节点大小放大 2 倍
-      node.resize(width * 2, height * 2)
-    })
   }
 
   bindEvent() {
@@ -268,6 +272,21 @@ export default class Canvas {
       }
     })
 
+    // graph.bindKey('shift', () => {
+    //   this.edgeConnectNolimit = !this.edgeConnectNolimit
+    //   const nodes = this.graph.getNodes()
+    //   nodes.forEach(node => {
+    //     const currentAttrs = node.getAttrs()
+    //     node.setAttrs({
+    //       ...currentAttrs,
+    //       body: {
+    //         ...currentAttrs.body,
+    //         magnet: this.edgeConnectNolimit
+    //       }
+    //     })
+    //   })
+    // })
+
     graph.on('node:mouseenter', () => {
       const container = this.graphContainer
       const ports = container.querySelectorAll(
@@ -302,6 +321,7 @@ export default class Canvas {
     graph.on('blank:click', () => {
       this.hideContextMenu()
     })
+
   }
 
   // 显示右键菜单
@@ -541,60 +561,12 @@ export default class Canvas {
       true,
     )
 
-    Graph.registerNode(
-      'custom-image',
-      {
-        inherit: 'rect',
-        zIndex: 1,
-        width: 52,
-        height: 52,
-        markup: [
-          {
-            tagName: 'rect',
-            selector: 'body',
-          },
-          {
-            tagName: 'image',
-          },
-          {
-            tagName: 'text',
-            selector: 'label',
-          },
-        ],
-        attrs: {
-          body: {
-            // stroke: '#5F95FF',
-            // fill: '#5F95FF',
-          },
-          image: {
-            width: 26,
-            height: 26,
-            refX: 13,
-            refY: 16,
-          },
-          label: {
-            refX: 3,
-            refY: 2,
-            textAnchor: 'left',
-            textVerticalAnchor: 'top',
-            fontSize: 12,
-            fill: '#fff',
-          },
-        },
-        ports: { ...ports },
-        tools: [
-          {
-            name: 'node-editor',
-            args: {
-              attrs: {
-                backgroundColor: 'transparent',
-              },
-            },
-          },
-        ],
-      },
-      true,
-    )
+    register({
+      shape: 'custom-react-node',
+      width: 100,
+      height: 100,
+      component: ImageNode,
+    })
   }
 
   loadCustomNode() {
@@ -851,10 +823,18 @@ export default class Canvas {
       }
     })
 
+    const imageNode = graph.createNode({
+      shape: 'custom-react-node',
+      width: 50,
+      height: 50,
+    })
+
     // 在创建分组后，为所有节点应用主题类名
-    const allNodes = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16]
+    const nodes1 = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16]
+    const nodes2 = [imageNode]
     // 创建分组
-    stencil.load(allNodes, 'group1')
+    stencil.load(nodes1, 'group1')
+    stencil.load(nodes2, 'group2')
   }
 
   // 更新选中节点的样式信息
