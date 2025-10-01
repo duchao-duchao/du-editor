@@ -19,6 +19,7 @@ import {
   TextUnderlineIcon,
   CengjiIcon,
   ThemeIcon,
+  LineIcon,
 } from '../../assets/svg/svgList' 
 import ExportModal from '../Modals/ExportModal'
 import ImportModal from '../Modals/ImportModal'
@@ -212,6 +213,59 @@ const ToolBar = (props: Props) => {
           >
           <div className={styles.operation}>
             <CengjiIcon width={18} height={18} />
+          </div>
+        </Popover>
+        <Popover
+            placement="bottom"
+            content={
+              <div>
+                <div
+                  className={styles.operationItem}
+                  onClick={() => {
+                    canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                      if(cell.shape === 'edge') {
+                        cell.attr('line/stroke-dasharray', '5,5')
+                        return
+                      }
+                      cell.attr('body/stroke-dasharray', '5,5')
+                    })
+                  }}
+                >
+                  虚线
+                </div>
+                <div
+                  className={styles.operationItem}
+                  onClick={() => {
+                    canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                      if(cell.shape === 'edge') {
+                        cell.attr('line/stroke-dasharray', '0')
+                        return
+                      }
+                      cell.attr('body/stroke-dasharray', '0')
+                    })
+                  }}
+                >
+                  实线
+                </div>
+                <div
+                  className={styles.operationItem}
+                  onClick={() => {
+                    canvas.current?.graph?.getSelectedCells().forEach((cell) => {
+                      if(cell.shape === 'edge') {
+                        cell.attr('line/stroke-dasharray', '2,2')
+                        return
+                      }
+                      cell.attr('body/stroke-dasharray', '2,2')
+                    })
+                  }}
+                >
+                  点线
+                </div>
+              </div>
+            }
+          >
+          <div className={styles.operation}>
+            <LineIcon width={18} height={18} />
           </div>
         </Popover>
       </div>

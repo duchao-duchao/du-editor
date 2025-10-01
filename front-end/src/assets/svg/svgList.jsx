@@ -136,3 +136,11 @@ export const ThemeIcon = (props) => {
     </svg>
   )
 }
+
+export const LineIcon = (props) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" {...props}>
+      <path stroke-linejoin="round" stroke-linecap="round" stroke-width="4" stroke="currentColor" d="M4 24h40M8 10h4M20 10h8M36 10h4M8 38h4M20 38h8M36 38h4" data-follow-stroke="#333"/>
+    </svg>
+  )
+}
